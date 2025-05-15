@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Student
+{% endblock title %}
+
+{% block body %}
+<!-- Form Start -->
+<section class="container border rounded mt-5 mb-5">
+
+    <form action="/update_student/{{student.id}}" method="post" enctype="multipart/form-data">
+        <!-- Name -->
+        <div class="mb-3 mt-2">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" id="Text" placeholder="Enter Your Name" value="{{ student.name }}">
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required value="{{ student.email }}">
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="date" name="dob" class="form-control" id="dob" required value="{{ student.dob }}">
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" name="gender" aria-label="Default select example">
+                <option selected>Select Gender</option>
+                <option value="Male" {% if student.gender == "Male" %}
+                    selected
+                {% endif %}>Male</option>
+                <option value="Female"  {% if student.gender == "Female" %}
+                    selected
+                {% endif %}>Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Roll No -->
+        <div class="mb-3">
+            <label for="rollnumber" class="form-label">Roll No</label>
+            <input type="text" name="rollnumber" class="form-control" id="rollnumber" placeholder="Enter Roll No" value = "{{ student.roll_no }}">
+        </div>
+
+        <!-- Addmission Date -->
+        <div class="mb-3">
+            <label for="addmissiondate" class="form-label">Addmission Date</label>
+            <input type="date" name="addmission_    date" class="form-control" id="addmissiondate" required value="{{ student.addmission_date }}">
+        </div>
+
+        <!-- Course -->
+        <div class="mb-3">
+            <label for="course" class="form-label">Course</label>
+            <input type="text" name="course" class="form-control" id="course" placeholder="Enter Course Name" value = "{{ student.course }}">
+        </div>
+
+        <!-- Profile Photo -->
+        <div class="mb-3">
+            <label for="photo" class="form-label">Profile Photo</label>
+            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+            <small>Current Photo: {{ student.photo }}</small>
+        </div>
+
+        <!-- Submit Button -->
+         <button href="/" type="submit" class="btn btn-primary mb-3">Update</button>
+
+    </form>
+
+</section>
+<!-- Form End -->
+{% endblock body %}

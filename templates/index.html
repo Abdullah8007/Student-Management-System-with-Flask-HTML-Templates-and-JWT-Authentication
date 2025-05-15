@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block body %}
+<!-- Table Start -->
+<section class="container my-3">
+    <h1 class="text-center bg-warning">Students</h1>
+    <table class="table border rounded mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Roll No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Course</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for student in students %}
+            <tr>
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.course }}</td>
+                <td>
+                    <a href="/student_details/{{student.id}}" type="button" class="btn btn-primary">More details</a>
+                    <a href="/update_student/{{student.id}}" type="button" class="btn btn-success">Update</a>
+                    <a href="/delete_student/{{student.id}}" type="button" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</section>
+<!-- Table End -->
+{% endblock body %}
