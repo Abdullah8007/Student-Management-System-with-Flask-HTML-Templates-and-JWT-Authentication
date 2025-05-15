@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response, g
+from flask import Flask, render_template, request, redirect, url_for, make_response, g, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -103,7 +103,7 @@ def login():
             algorithm = "HS256"
         )
 
-        response = make_response(render_template("index.html"))
+        response = make_response(redirect(url_for('home')))
         response.set_cookie("token", token, expires = expire_at, httponly = True)
 
         return response
@@ -117,12 +117,14 @@ def logout():
     response.delete_cookie("token")
     return response
 
-# @app.route('/')
-# def home():
-#     students = Student.query.all()
-#     return render_template("index.html", students = students)
+@app.route('/home')
+@token_required
+def home():
+    students = Student.query.all()
+    return render_template("index.html", students = students)
 
 @app.route('/add_student', methods = ["GET", "POST"])
+@token_required
 def add_student():
     if request.method == "POST":
         name = request.form.get("name")
@@ -151,6 +153,7 @@ def add_student():
     return render_template("add_student.html")
 
 @app.route('/student_details/<int:student_id>', methods = ["GET"])
+@token_required
 def student_details(student_id):
 
     student = Student.query.get(student_id)
@@ -158,6 +161,7 @@ def student_details(student_id):
     return render_template("student_details.html", student = student)
 
 @app.route('/update_student/<int:student_id>', methods = ["GET", "POST"])
+@token_required
 def update_student(student_id):
     student = Student.query.get(student_id)
 
@@ -185,6 +189,7 @@ def update_student(student_id):
     return render_template("update_student.html", student = student)
 
 @app.route('/delete_student/<int:student_id>')
+@token_required
 def delete_student(student_id):
 
     student = Student.query.get(student_id)
